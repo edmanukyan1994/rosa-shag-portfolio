@@ -5,14 +5,13 @@ import { useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { useUI } from "@/lib/ui-context";
-import { CONTACT } from "@/lib/utils";
-import { InstagramIcon, TelegramIcon, TikTokIcon, YoutubeIcon } from "@/components/ui/SocialIcons";
+import { CONTACT, SOCIAL_LINKS } from "@/lib/utils";
+import { InstagramIcon, TelegramIcon, TikTokIcon } from "@/components/ui/SocialIcons";
 
 const socials = [
-  { icon: InstagramIcon, label: "Instagram", href: "https://instagram.com" },
-  { icon: TikTokIcon, label: "TikTok", href: "https://tiktok.com" },
-  { icon: YoutubeIcon, label: "YouTube", href: "https://youtube.com" },
-  { icon: TelegramIcon, label: "Telegram", href: "https://t.me" },
+  { icon: InstagramIcon, label: "Instagram", href: SOCIAL_LINKS.instagram },
+  { icon: TikTokIcon, label: "TikTok", href: SOCIAL_LINKS.tiktok },
+  { icon: TelegramIcon, label: "Telegram", href: SOCIAL_LINKS.telegram },
 ];
 
 const footerLinks = [

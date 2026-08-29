@@ -1,11 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, Copy, MessageCircle, Send, X } from "lucide-react";
+import { Check, Copy, Send, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useUI } from "@/lib/ui-context";
 import { Button } from "@/components/ui/Button";
-import { buildTelegramLink, buildWhatsAppLink, CONTACT } from "@/lib/utils";
+import { buildMailtoLink, buildTelegramLink, CONTACT } from "@/lib/utils";
 
 export function ContactDrawer() {
   const { isContactOpen, closeContact, contactPrefill } = useUI();
@@ -124,13 +124,12 @@ export function ContactDrawer() {
                   Отправить в Telegram
                 </Button>
                 <Button
-                  href={buildWhatsAppLink(buildMessage())}
+                  href={buildMailtoLink("UGC — заявка с сайта", buildMessage())}
                   variant="secondary"
                   size="md"
                   className="w-full"
                 >
-                  <MessageCircle className="h-4 w-4" />
-                  Отправить в WhatsApp
+                  Написать на email
                 </Button>
               </div>
             </form>
