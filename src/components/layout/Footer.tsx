@@ -100,9 +100,22 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="pb-10 text-center text-xs text-text-muted">
-          © {new Date().getFullYear()} Rosa_shag. Все права защищены.
-        </p>
+        <div className="flex flex-col items-center gap-4 pb-10">
+          <p className="text-center text-xs text-text-muted">
+            © {new Date().getFullYear()} Rosa_shag. Все права защищены.
+          </p>
+          <a
+            href="https://edgarmanukyan.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-white/55 px-3.5 py-1.5 text-[11px] tracking-wide text-text-muted backdrop-blur-sm transition-colors hover:border-accent/35 hover:text-text-secondary"
+          >
+            <span className="uppercase">Разработка</span>
+            <span className="h-3 w-px bg-border-subtle" aria-hidden />
+            <span className="font-medium text-text-secondary">Edgar Manukyan</span>
+            <span className="text-accent/90">edgarmanukyan.com</span>
+          </a>
+        </div>
       </Container>
     </footer>
   );
