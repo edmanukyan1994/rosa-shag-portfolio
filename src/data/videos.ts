@@ -172,6 +172,16 @@ export const videos: VideoItem[] = [
     durationLabel: "0:38",
   },
   {
+    id: "asmr-5",
+    title: "ASMR — новый ролик",
+    client: "Rosa_shag",
+    format: "asmr",
+    formatTag: "ASMR",
+    thumbnail: "/images/thumbnails/asmr/IMG_8446.jpg",
+    videoSrc: "/videos/asmr/web/IMG_8446.mp4",
+    durationLabel: "0:13",
+  },
+  {
     id: "vlog-1",
     title: "Влог: beauty-день",
     client: "Rosa_shag",

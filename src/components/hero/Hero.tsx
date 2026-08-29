@@ -20,7 +20,7 @@ export function Hero() {
   const { openContact } = useUI();
 
   return (
-    <section id="top" className="relative overflow-hidden pb-14 pt-20 sm:pb-16 sm:pt-24 lg:pt-20">
+    <section id="top" className="relative overflow-visible pb-14 pt-20 sm:pb-16 sm:pt-24 lg:pt-20">
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-6 px-4 sm:gap-8 sm:px-8 lg:gap-5 lg:px-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}

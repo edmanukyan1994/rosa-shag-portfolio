@@ -3,13 +3,12 @@
 import {
   motion,
   useAnimationFrame,
-  useMotionTemplate,
   useMotionValue,
   useTransform,
 } from "framer-motion";
 import { Play } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { VideoItem } from "@/types";
 import { useUI } from "@/lib/ui-context";
 import { Badge } from "@/components/ui/Badge";
@@ -19,15 +18,61 @@ const CARD_H = 256;
 const RADIUS_X = 420;
 const RADIUS_Y = 170;
 const TILT_DEG = -13;
-const SPEED = 0.01; // degrees per millisecond
-const DESIGN_WIDTH = 1040; // container width at which the orbit renders at 100% scale
+const SPEED = 0.01;
+const DESIGN_WIDTH = 1040;
 
-// Three explicit depth layers so the creator always reads as the "middle
-// ground": cards behind her sit in the back layer, cards in front of her sit
-// in the front layer, and the two ranges never overlap the portrait's z-index.
 const Z_BACK: [number, number] = [40, 90];
 const Z_PORTRAIT = 170;
 const Z_FRONT: [number, number] = [250, 300];
+
+type OrbitDims = {
+  scale: number;
+  radiusX: number;
+  radiusY: number;
+};
+
+function useOrbitDims(containerRef: RefObject<HTMLDivElement | null>) {
+  const [dims, setDims] = useState<OrbitDims>({
+    scale: 1,
+    radiusX: RADIUS_X,
+    radiusY: RADIUS_Y,
+  });
+
+  useLayoutEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const update = () => {
+      const width = el.getBoundingClientRect().width;
+      const isMobile = width < 640;
+
+      if (isMobile) {
+        const mobileRadiusX = RADIUS_X * 0.78;
+        const mobileRadiusY = RADIUS_Y * 0.78;
+        const fitScale = Math.min(1, (width - 24) / (mobileRadiusX * 2 + CARD_W * 0.5));
+        setDims({
+          scale: Math.max(0.58, fitScale),
+          radiusX: mobileRadiusX,
+          radiusY: mobileRadiusY,
+        });
+        return;
+      }
+
+      setDims({
+        scale: Math.min(1, width / DESIGN_WIDTH),
+        radiusX: RADIUS_X,
+        radiusY: RADIUS_Y,
+      });
+    };
+
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [containerRef]);
+
+  return dims;
+}
 
 export function OrbitShowcase({
   items,
@@ -38,28 +83,16 @@ export function OrbitShowcase({
 }) {
   const angle = useMotionValue(0);
   const [mounted, setMounted] = useState(false);
-  const [scale, setScale] = useState(1);
+  const [reduceEffects, setReduceEffects] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const dims = useOrbitDims(containerRef);
 
-  // Orbit positions are derived from a continuously running clock, so they're
-  // only rendered client-side to avoid a server/client markup mismatch.
-  useEffect(() => setMounted(true), []);
+  useLayoutEffect(() => setMounted(true), []);
 
-  // The orbit's radius is tuned for a ~660px-wide container. On narrower
-  // desktop widths (e.g. a tight lg breakpoint) we scale the whole visual
-  // down proportionally so it never collides with the text column.
-  useLayoutEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const observer = new ResizeObserver((entries) => {
-      const width = entries[0]?.contentRect.width ?? DESIGN_WIDTH;
-      // On narrow screens use a smaller design baseline so the orbit
-      // doesn't shrink to an unreadable size.
-      const baseline = width < 640 ? 640 : DESIGN_WIDTH;
-      setScale(Math.min(1, width / baseline));
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
+  useEffect(() => {
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    const lowPower = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setReduceEffects(coarse || lowPower);
   }, []);
 
   useAnimationFrame((_, delta) => {
@@ -69,16 +102,16 @@ export function OrbitShowcase({
   return (
     <div
       ref={containerRef}
-      className="relative mx-auto h-[480px] w-full max-w-[1040px] select-none sm:h-[560px] lg:h-[700px]"
+      className="relative mx-auto h-[min(92vw,520px)] w-full max-w-[1040px] select-none sm:h-[560px] lg:h-[700px]"
     >
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 [transform-style:preserve-3d] will-change-transform"
         style={{
-          transform: `scale(${scale}) translateY(-6%)`,
+          transform: `scale(${dims.scale}) translate3d(0, -6%, 0)`,
           transformOrigin: "50% 38%",
         }}
       >
-        <OrbitRing />
+        <OrbitRing radiusX={dims.radiusX} radiusY={dims.radiusY} />
         <FocalPortrait src={portraitSrc} />
 
         {mounted &&
@@ -89,6 +122,9 @@ export function OrbitShowcase({
               index={i}
               total={items.length}
               angle={angle}
+              radiusX={dims.radiusX}
+              radiusY={dims.radiusY}
+              reduceEffects={reduceEffects}
             />
           ))}
       </div>
@@ -96,16 +132,22 @@ export function OrbitShowcase({
   );
 }
 
-function OrbitRing() {
+function OrbitRing({
+  radiusX,
+  radiusY,
+}: {
+  radiusX: number;
+  radiusY: number;
+}) {
   return (
     <div
       className="pointer-events-none absolute left-1/2 top-1/2 z-0 rounded-[50%] border border-accent/15"
       style={{
-        width: RADIUS_X * 2,
-        height: RADIUS_Y * 2,
-        marginLeft: -RADIUS_X,
-        marginTop: -RADIUS_Y,
-        transform: `rotate(${TILT_DEG}deg)`,
+        width: radiusX * 2,
+        height: radiusY * 2,
+        marginLeft: -radiusX,
+        marginTop: -radiusY,
+        transform: `rotate(${TILT_DEG}deg) translateZ(0)`,
         background:
           "radial-gradient(ellipse at center, rgba(231,84,128,0.08), transparent 70%)",
       }}
@@ -120,7 +162,6 @@ function FocalPortrait({ src }: { src: string }) {
       style={{ zIndex: Z_PORTRAIT }}
     >
       <div className="relative flex h-[340px] w-[220px] items-end justify-center sm:h-[420px] sm:w-[272px] lg:h-[500px] lg:w-[322px]">
-        {/* ground-level energy ring, tilted to match the orbit path she's standing inside */}
         <motion.span
           className="absolute bottom-3 h-14 w-52 rounded-[50%] border border-accent/30"
           style={{ transform: `rotate(${TILT_DEG}deg)` }}
@@ -156,57 +197,49 @@ function OrbitCard({
   index,
   total,
   angle,
+  radiusX,
+  radiusY,
+  reduceEffects,
 }: {
   item: VideoItem;
   index: number;
   total: number;
   angle: ReturnType<typeof useMotionValue<number>>;
+  radiusX: number;
+  radiusY: number;
+  reduceEffects: boolean;
 }) {
   const { openVideo } = useUI();
   const offset = (360 / total) * index;
   const tiltRad = (TILT_DEG * Math.PI) / 180;
   const cosT = Math.cos(tiltRad);
   const sinT = Math.sin(tiltRad);
-  // y(t) = RADIUS_X*cos(t)*sinT + RADIUS_Y*sin(t)*cosT is a sinusoid of the
-  // form A*cos(t)+B*sin(t); its amplitude lets us normalize the *final,
-  // on-screen* vertical position to a clean -1..1 depth value.
-  const yAmplitude = Math.sqrt(
-    (RADIUS_X * sinT) ** 2 + (RADIUS_Y * cosT) ** 2
-  );
+  const yAmplitude = Math.sqrt((radiusX * sinT) ** 2 + (radiusY * cosT) ** 2);
 
   const x = useTransform(angle, (a) => {
     const rad = ((a + offset) * Math.PI) / 180;
-    const ex = RADIUS_X * Math.cos(rad);
-    const ey = RADIUS_Y * Math.sin(rad);
+    const ex = radiusX * Math.cos(rad);
+    const ey = radiusY * Math.sin(rad);
     return ex * cosT - ey * sinT;
   });
 
   const y = useTransform(angle, (a) => {
     const rad = ((a + offset) * Math.PI) / 180;
-    const ex = RADIUS_X * Math.cos(rad);
-    const ey = RADIUS_Y * Math.sin(rad);
+    const ex = radiusX * Math.cos(rad);
+    const ey = radiusY * Math.sin(rad);
     return ex * sinT + ey * cosT;
   });
 
-  // Depth is derived from the card's actual on-screen position along the
-  // tilted ellipse (not the angle before tilt was applied): the lower part
-  // of the tilted ellipse is the foreground, the upper part is the
-  // background — exactly matching how the ellipse visually reads.
   const depth = useTransform(y, (val) => val / yAmplitude);
-
   const scale = useTransform(depth, [-1, 1], [0.6, 1.1]);
   const opacity = useTransform(depth, [-1, 1], [0.45, 1]);
-  const blurPx = useTransform(depth, [-1, 1], [2, 0]);
-  const filter = useMotionTemplate`blur(${blurPx}px)`;
 
-  // Discrete layering: cards behind the creator (depth < 0) always render in
-  // the back layer, cards in front of her (depth >= 0) always render in the
-  // front layer — she consistently reads as the middle ground, never mixed
-  // in with either layer.
   const zIndex = useTransform(depth, (d) =>
-    d >= 0
-      ? Z_FRONT[0] + d * (Z_FRONT[1] - Z_FRONT[0])
-      : Z_BACK[0] + (d + 1) * (Z_BACK[1] - Z_BACK[0])
+    Math.round(
+      d >= 0
+        ? Z_FRONT[0] + d * (Z_FRONT[1] - Z_FRONT[0])
+        : Z_BACK[0] + (d + 1) * (Z_BACK[1] - Z_BACK[0])
+    )
   );
 
   const rotateX = useMotionValue(0);
@@ -214,6 +247,7 @@ function OrbitCard({
   const [hovered, setHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reduceEffects) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
@@ -229,7 +263,7 @@ function OrbitCard({
 
   return (
     <motion.div
-      className="absolute left-1/2 top-1/2 cursor-pointer [perspective:600px]"
+      className="absolute left-1/2 top-1/2 cursor-pointer"
       style={{
         marginLeft: -CARD_W / 2,
         marginTop: -CARD_H / 2,
@@ -240,7 +274,6 @@ function OrbitCard({
         scale,
         opacity,
         zIndex,
-        filter,
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseMove={handleMouseMove}
@@ -248,9 +281,13 @@ function OrbitCard({
       onClick={() => openVideo(item)}
     >
       <motion.div
-        className="group relative h-full w-full overflow-hidden rounded-[22px] border border-border-subtle bg-bg-card shadow-[0_20px_50px_-20px_rgba(58,36,41,0.45)] [transform-style:preserve-3d]"
+        className="group relative h-full w-full overflow-hidden rounded-[22px] border border-border-subtle bg-bg-card shadow-[0_20px_50px_-20px_rgba(58,36,41,0.45)]"
         style={{ rotateX, rotateY }}
-        animate={{ boxShadow: hovered ? "0 0 0 1.5px rgba(231,84,128,0.5)" : "0 0 0 0px rgba(231,84,128,0)" }}
+        animate={{
+          boxShadow: hovered
+            ? "0 0 0 1.5px rgba(231,84,128,0.5)"
+            : "0 0 0 0px rgba(231,84,128,0)",
+        }}
       >
         <Image
           src={item.thumbnail}
