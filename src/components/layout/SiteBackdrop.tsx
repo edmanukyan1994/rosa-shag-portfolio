@@ -14,81 +14,80 @@ const SECTIONS = [
 type PlacedLabel = { id: string; label: string; top: number };
 
 export function SiteBackdrop() {
+  const [height, setHeight] = useState(0);
   const [labels, setLabels] = useState<PlacedLabel[]>([]);
-  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    let labelFrame = 0;
-    let scrollFrame = 0;
+    let frame = 0;
 
-    const updateLabels = () => {
+    const update = () => {
+      const docHeight = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight
+      );
+      setHeight(docHeight);
+
       const placed = SECTIONS.flatMap((section) => {
         const el = document.getElementById(section.id);
         if (!el) return [];
-
-        const top = el.offsetTop - 56;
-        return [{ id: section.id, label: section.label, top }];
+        return [{ id: section.id, label: section.label, top: el.offsetTop - 56 }];
       });
 
       setLabels(placed);
     };
 
-    const onScroll = () => {
-      cancelAnimationFrame(scrollFrame);
-      scrollFrame = requestAnimationFrame(() => {
-        setScrollY(window.scrollY);
-      });
+    const schedule = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
     };
 
-    const scheduleLabels = () => {
-      cancelAnimationFrame(labelFrame);
-      labelFrame = requestAnimationFrame(updateLabels);
-    };
+    schedule();
 
-    scheduleLabels();
-    onScroll();
-
-    const observer = new ResizeObserver(scheduleLabels);
+    const observer = new ResizeObserver(schedule);
     observer.observe(document.body);
 
-    window.addEventListener("resize", scheduleLabels, { passive: true });
-    window.addEventListener("scroll", onScroll, { passive: true });
-    const delayed = window.setTimeout(scheduleLabels, 400);
+    window.addEventListener("resize", schedule, { passive: true });
+    const delayed = window.setTimeout(schedule, 500);
 
     return () => {
-      cancelAnimationFrame(labelFrame);
-      cancelAnimationFrame(scrollFrame);
+      cancelAnimationFrame(frame);
       observer.disconnect();
-      window.removeEventListener("resize", scheduleLabels);
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", schedule);
       window.clearTimeout(delayed);
     };
   }, []);
 
   return (
-    <div className="site-backdrop-visual" aria-hidden="true">
-      <div className="site-backdrop-gradient" />
-      <div className="site-backdrop-glow site-backdrop-glow-a" />
-      <div className="site-backdrop-glow site-backdrop-glow-b" />
-
-      {/* Labels sit between gradient and ribbed glass; synced to scroll */}
-      <div
-        className="site-backdrop-labels"
-        style={{ transform: `translate3d(0, ${-scrollY}px, 0)` }}
-      >
-        {labels.map((item) => (
-          <span
-            key={item.id}
-            className="site-backdrop-label"
-            style={{ top: item.top }}
-          >
-            {item.label}
-          </span>
-        ))}
+    <>
+      {/* Sky — fixed gradient, always fills viewport */}
+      <div className="site-backdrop-sky" aria-hidden="true">
+        <div className="site-backdrop-gradient" />
+        <div className="site-backdrop-glow site-backdrop-glow-a" />
+        <div className="site-backdrop-glow site-backdrop-glow-b" />
       </div>
 
-      <div className="site-backdrop-ribbed" />
-      <div className="site-backdrop-frost" />
-    </div>
+      {/* Glass stack scrolls with the page — labels stay glued to ribs */}
+      <div
+        className="site-backdrop-glass"
+        style={{ height: height || "100vh" }}
+        aria-hidden="true"
+      >
+        <div className="site-backdrop-labels">
+          {labels.map((item) => (
+            <span
+              key={item.id}
+              className="site-backdrop-label"
+              style={{ top: item.top }}
+            >
+              {item.label}
+            </span>
+          ))}
+        </div>
+
+        <div className="site-backdrop-ribbed" />
+        <div className="site-backdrop-grain" />
+        <div className="site-backdrop-frost" />
+      </div>
+    </>
   );
 }
