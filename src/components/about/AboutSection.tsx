@@ -29,7 +29,7 @@ export function AboutSection() {
               <div className="relative h-[280px] w-[182px] sm:h-[330px] sm:w-[214px]">
                 <Image
                   src="/images/rosa-cutout.png"
-                  alt="Манукян Роза — UGC-криейтор"
+                  alt="Манукян Роза — UGC-креатор"
                   fill
                   sizes="214px"
                   className="object-contain object-bottom"
@@ -48,7 +48,7 @@ export function AboutSection() {
             <SectionHeading
               eyebrow="Обо мне"
               title="Манукян Роза"
-              description="Мама, жена и UGC-криейтор, который создаёт живой, эстетичный и нативный контент для брендов."
+              description="Мама, жена и UGC-креатор, который создаёт живой, эстетичный и нативный контент для брендов."
               className="[&_h2]:font-editorial [&_h2]:text-4xl [&_h2]:sm:text-5xl"
             />
 

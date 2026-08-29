@@ -27,11 +27,11 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Rosa_shag — Манукян Роза | UGC-криейтор beauty, fashion, lifestyle",
+  title: "Rosa_shag — Манукян Роза | UGC-креатор beauty, fashion, lifestyle",
   description:
-    "Манукян Роза — UGC-криейтор с опытом блогинга 2+ года. Живой, эстетичный и нативный контент для beauty, fashion и lifestyle брендов.",
+    "Манукян Роза — UGC-креатор с опытом блогинга 2+ года. Живой, эстетичный и нативный контент для beauty, fashion и lifestyle брендов.",
   keywords: [
-    "UGC криейтор",
+    "UGC креатор",
     "user generated content",
     "beauty UGC",
     "fashion UGC",

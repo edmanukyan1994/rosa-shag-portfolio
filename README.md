@@ -1,6 +1,6 @@
 # Rosa_shag — UGC Portfolio
 
-Портфолио UGC-криейтора **Манукян Роза** (Rosa_shag). Next.js 15, React 19, Tailwind v4.
+Портфолио UGC-креатора **Манукян Роза** (Rosa_shag). Next.js 15, React 19, Tailwind v4.
 
 ## Локальный запуск
 

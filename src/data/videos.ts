@@ -72,6 +72,16 @@ export const videos: VideoItem[] = [
     durationLabel: "0:17",
   },
   {
+    id: "unbox-8",
+    title: "Распаковка",
+    client: "Rosa_shag",
+    format: "unboxing",
+    formatTag: "Распаковка",
+    thumbnail: "/images/thumbnails/unboxing/IMG_8446.jpg",
+    videoSrc: "/videos/unboxing/web/IMG_8446.mp4",
+    durationLabel: "0:13",
+  },
+  {
     id: "ba-1",
     title: "До и после — результат ухода",
     client: "Rosa_shag",
@@ -170,16 +180,6 @@ export const videos: VideoItem[] = [
     thumbnail: "/images/thumbnails/asmr/IMG_8433.jpg",
     videoSrc: "/videos/asmr/web/IMG_8433.mp4",
     durationLabel: "0:38",
-  },
-  {
-    id: "asmr-5",
-    title: "ASMR — новый ролик",
-    client: "Rosa_shag",
-    format: "asmr",
-    formatTag: "ASMR",
-    thumbnail: "/images/thumbnails/asmr/IMG_8446.jpg",
-    videoSrc: "/videos/asmr/web/IMG_8446.mp4",
-    durationLabel: "0:13",
   },
   {
     id: "asmr-6",

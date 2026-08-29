@@ -180,7 +180,7 @@ function FocalPortrait({ src }: { src: string }) {
         <div className="relative h-[330px] w-[215px] sm:h-[408px] sm:w-[266px] lg:h-[486px] lg:w-[316px]">
           <Image
             src={src}
-            alt="Манукян Роза — UGC-криейтор"
+            alt="Манукян Роза — UGC-креатор"
             fill
             sizes="(max-width: 640px) 215px, (max-width: 1024px) 266px, 316px"
             priority
