@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, Check, Link2, Play, X } from "lucide-react";
+import { ArrowLeft, Check, Link2, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useUI } from "@/lib/ui-context";
@@ -12,38 +12,33 @@ import { Badge } from "@/components/ui/Badge";
 export function VideoModal() {
   const { activeVideo, closeVideo, openContact } = useUI();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (!activeVideo) return;
-    setIsPlaying(false);
     setCopied(false);
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeVideo();
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      videoRef.current?.pause();
     };
   }, [activeVideo, closeVideo]);
 
-  const togglePlay = () => {
+  // Reset player when a new video is opened
+  useEffect(() => {
     const el = videoRef.current;
-    if (!el) {
-      setIsPlaying((p) => !p);
-      return;
-    }
-    if (el.paused) {
-      el.play();
-      setIsPlaying(true);
-    } else {
-      el.pause();
-      setIsPlaying(false);
-    }
-  };
+    if (!el || !activeVideo?.videoSrc) return;
+    el.pause();
+    el.currentTime = 0;
+    el.load();
+  }, [activeVideo?.id, activeVideo?.videoSrc]);
 
   const shareVideo = useCallback(async () => {
     if (!activeVideo) return;
@@ -80,7 +75,6 @@ export function VideoModal() {
           aria-modal="true"
           aria-label={activeVideo.title}
         >
-          {/* Top bar — always visible */}
           <div className="flex shrink-0 items-center justify-between gap-3 border-b border-white/10 px-4 py-3 pt-[max(0.75rem,env(safe-area-inset-top))]">
             <button
               type="button"
@@ -110,25 +104,23 @@ export function VideoModal() {
             </button>
           </div>
 
-          {/* Scrollable body */}
           <div className="flex-1 overflow-y-auto overscroll-contain">
             <div className="mx-auto flex w-full max-w-lg flex-col gap-5 px-4 py-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:max-w-2xl sm:py-8">
               <div
-                className="relative mx-auto w-full max-w-[min(100%,340px)] cursor-pointer overflow-hidden rounded-2xl bg-black shadow-[0_24px_80px_-20px_rgba(0,0,0,0.65)]"
+                className="relative mx-auto w-full max-w-[min(100%,340px)] overflow-hidden rounded-2xl bg-black shadow-[0_24px_80px_-20px_rgba(0,0,0,0.65)]"
                 style={{ aspectRatio: "9/16", maxHeight: "min(68dvh, 620px)" }}
-                onClick={togglePlay}
               >
                 {activeVideo.videoSrc ? (
                   <video
+                    key={activeVideo.id}
                     ref={videoRef}
                     src={activeVideo.videoSrc}
                     poster={activeVideo.thumbnail}
                     className="h-full w-full object-contain"
                     playsInline
-                    loop
                     controls
-                    onPlay={() => setIsPlaying(true)}
-                    onPause={() => setIsPlaying(false)}
+                    controlsList="nodownload"
+                    preload="metadata"
                   />
                 ) : (
                   <>
@@ -143,15 +135,7 @@ export function VideoModal() {
                   </>
                 )}
 
-                {!isPlaying && activeVideo.videoSrc && (
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/20">
-                    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/15 backdrop-blur-md">
-                      <Play className="h-6 w-6 translate-x-0.5 fill-white text-white" />
-                    </span>
-                  </div>
-                )}
-
-                <div className="pointer-events-none absolute left-3 top-3">
+                <div className="pointer-events-none absolute left-3 top-3 z-10">
                   <Badge variant="accent">{activeVideo.formatTag}</Badge>
                 </div>
               </div>
@@ -198,7 +182,6 @@ export function VideoModal() {
             </div>
           </div>
 
-          {/* Desktop extra close */}
           <button
             type="button"
             onClick={() => closeVideo()}
