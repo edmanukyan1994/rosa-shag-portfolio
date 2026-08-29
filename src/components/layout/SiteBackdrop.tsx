@@ -15,11 +15,13 @@ type PlacedLabel = { id: string; label: string; top: number };
 
 export function SiteBackdrop() {
   const [labels, setLabels] = useState<PlacedLabel[]>([]);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    let frame = 0;
+    let labelFrame = 0;
+    let scrollFrame = 0;
 
-    const update = () => {
+    const updateLabels = () => {
       const placed = SECTIONS.flatMap((section) => {
         const el = document.getElementById(section.id);
         if (!el) return [];
@@ -31,40 +33,49 @@ export function SiteBackdrop() {
       setLabels(placed);
     };
 
-    const schedule = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(update);
+    const onScroll = () => {
+      cancelAnimationFrame(scrollFrame);
+      scrollFrame = requestAnimationFrame(() => {
+        setScrollY(window.scrollY);
+      });
     };
 
-    schedule();
+    const scheduleLabels = () => {
+      cancelAnimationFrame(labelFrame);
+      labelFrame = requestAnimationFrame(updateLabels);
+    };
 
-    const observer = new ResizeObserver(schedule);
+    scheduleLabels();
+    onScroll();
+
+    const observer = new ResizeObserver(scheduleLabels);
     observer.observe(document.body);
 
-    window.addEventListener("resize", schedule, { passive: true });
-    const delayed = window.setTimeout(schedule, 400);
+    window.addEventListener("resize", scheduleLabels, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    const delayed = window.setTimeout(scheduleLabels, 400);
 
     return () => {
-      cancelAnimationFrame(frame);
+      cancelAnimationFrame(labelFrame);
+      cancelAnimationFrame(scrollFrame);
       observer.disconnect();
-      window.removeEventListener("resize", schedule);
+      window.removeEventListener("resize", scheduleLabels);
+      window.removeEventListener("scroll", onScroll);
       window.clearTimeout(delayed);
     };
   }, []);
 
   return (
-    <>
-      {/* Fixed visual layers — viewport only, no SVG filters (GPU-friendly) */}
-      <div className="site-backdrop-visual" aria-hidden="true">
-        <div className="site-backdrop-gradient" />
-        <div className="site-backdrop-glow site-backdrop-glow-a" />
-        <div className="site-backdrop-glow site-backdrop-glow-b" />
-        <div className="site-backdrop-ribbed" />
-        <div className="site-backdrop-frost" />
-      </div>
+    <div className="site-backdrop-visual" aria-hidden="true">
+      <div className="site-backdrop-gradient" />
+      <div className="site-backdrop-glow site-backdrop-glow-a" />
+      <div className="site-backdrop-glow site-backdrop-glow-b" />
 
-      {/* Labels scroll with content; lightweight CSS only */}
-      <div className="site-backdrop-labels" aria-hidden="true">
+      {/* Labels sit between gradient and ribbed glass; synced to scroll */}
+      <div
+        className="site-backdrop-labels"
+        style={{ transform: `translate3d(0, ${-scrollY}px, 0)` }}
+      >
         {labels.map((item) => (
           <span
             key={item.id}
@@ -75,6 +86,9 @@ export function SiteBackdrop() {
           </span>
         ))}
       </div>
-    </>
+
+      <div className="site-backdrop-ribbed" />
+      <div className="site-backdrop-frost" />
+    </div>
   );
 }
