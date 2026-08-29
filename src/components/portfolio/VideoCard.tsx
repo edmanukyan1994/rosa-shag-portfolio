@@ -51,6 +51,7 @@ export function VideoCard({ item }: { item: VideoItem }) {
           muted
           loop
           playsInline
+          preload="none"
           className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${
             hovered ? "opacity-100" : "opacity-0"
           }`}

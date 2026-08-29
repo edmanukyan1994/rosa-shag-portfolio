@@ -5,7 +5,7 @@ import { Testimonials } from "./Testimonials";
 
 export function SocialProofSection() {
   return (
-    <section id="proof" className="relative py-24 sm:py-28">
+    <section id="proof" className="relative py-24 sm:py-28 [content-visibility:auto] [contain-intrinsic-size:auto_900px]">
       <Container>
         <SectionHeading
           eyebrow="Результаты"
