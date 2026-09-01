@@ -14,7 +14,11 @@ export type VideoFormat =
   | "time-result"
   | "aesthetic"
   | "lifehack"
-  | "funny";
+  | "funny"
+  | "inspiring-recipes"
+  | "beauty-aesthetic"
+  | "hair-care"
+  | "humor";
 
 export interface VideoItem {
   id: string;

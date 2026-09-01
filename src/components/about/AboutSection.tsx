@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 
 const highlights = [
@@ -15,75 +14,69 @@ const highlights = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="relative py-20 sm:py-24">
+    <section id="about" className="relative py-20 sm:py-28">
       <Container>
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[280px_1fr] lg:gap-16">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6 }}
-            className="mx-auto lg:mx-0"
-          >
-            <div className="relative flex w-[220px] items-end justify-center sm:w-[260px]">
-              <div className="relative h-[280px] w-[182px] sm:h-[330px] sm:w-[214px]">
-                <Image
-                  src="/images/rosa-cutout.png"
-                  alt="Манукян Роза — UGC-креатор"
-                  fill
-                  sizes="214px"
-                  className="object-contain object-bottom"
-                />
-              </div>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6 }}
+          className="about-panel mx-auto flex max-w-2xl flex-col items-center gap-8 px-6 py-10 text-center sm:gap-10 sm:px-10 sm:py-12"
+        >
+          <div className="relative flex w-[200px] items-end justify-center sm:w-[240px]">
+            <div className="relative h-[260px] w-[170px] sm:h-[300px] sm:w-[196px]">
+              <Image
+                src="/images/rosa-cutout.png"
+                alt="Манукян Роза — UGC-креатор"
+                fill
+                sizes="196px"
+                className="object-contain object-bottom drop-shadow-[0_12px_28px_rgba(58,36,41,0.18)]"
+                priority
+              />
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex flex-col gap-6"
-          >
-            <SectionHeading
-              eyebrow="Обо мне"
-              title="Манукян Роза"
-              description="Мама, жена и UGC-креатор, который создаёт живой, эстетичный и нативный контент для брендов."
-              className="[&_h2]:font-editorial [&_h2]:text-4xl [&_h2]:sm:text-5xl"
-            />
-
-            <div className="flex flex-wrap gap-2">
-              {highlights.map((item) => (
-                <Badge key={item} variant="outline">
-                  {item}
-                </Badge>
-              ))}
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex items-center justify-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_12px_2px_rgba(231,84,128,0.6)]" />
+              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+                Обо мне
+              </span>
             </div>
 
-            <div className="readable-copy flex max-w-2xl flex-col gap-4 text-base leading-relaxed text-text-primary/90">
-              <p>
-                Я — мама дочки и счастливая жена, активная, ответственная и всегда
-                открытая к новым знаниям и развитию.
-              </p>
-              <p>
-                Более 2 лет занимаюсь блогингом и за это время реализовала множество
-                коммерческих интеграций с брендами. Умею работать по ТЗ, чувствую
-                визуал, понимаю особенности съёмки, подачи и работы с техникой.
-              </p>
-              <p>
-                Особенно люблю beauty-контент: косметику, уход, различные процедуры,
-                а также fashion, переодевания и актуальные тренды. Мне нравится снимать
-                короткие лайфстайл-влоги, показывать моменты из жизни и создавать
-                живой, эстетичный и нативный контент.
-              </p>
-              <p>
-                Сейчас хочу активно развиваться в направлении UGC и создавать для
-                брендов контент, который выглядит естественно, вызывает доверие и
-                помогает продукту быть замеченным.
-              </p>
-            </div>
-          </motion.div>
-        </div>
+            <h2 className="font-editorial text-4xl leading-tight text-text-primary sm:text-5xl">
+              Манукян Роза
+            </h2>
+
+            <p className="about-lead max-w-md text-lg leading-relaxed text-text-secondary sm:text-xl">
+              Мама, жена и UGC-креатор. Снимаю живой, эстетичный и нативный контент для брендов.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2">
+            {highlights.map((item) => (
+              <Badge key={item} variant="outline">
+                {item}
+              </Badge>
+            ))}
+          </div>
+
+          <div className="about-copy flex max-w-lg flex-col gap-5 text-center">
+            <p>
+              Я — мама дочки и счастливая жена. Активная, ответственная и всегда открытая к новым
+              знаниям. Более двух лет веду блог и реализовала множество коммерческих интеграций с
+              брендами.
+            </p>
+            <p>
+              Умею работать по ТЗ, чувствую визуал и понимаю съёмку, подачу и работу с техникой.
+              Особенно люблю beauty — косметику, уход и процедуры — а также fashion и лайфстайл.
+            </p>
+            <p>
+              Сейчас развиваюсь в UGC: создаю контент, который выглядит естественно, вызывает
+              доверие и помогает продукту быть замеченным.
+            </p>
+          </div>
+        </motion.div>
       </Container>
     </section>
   );

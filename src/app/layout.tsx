@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Inter, Space_Grotesk } from "next/font/google";
+import { Cormorant_Garamond, Inter, Montserrat, Space_Grotesk } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import { UIProvider } from "@/lib/ui-context";
@@ -24,6 +24,13 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin", "cyrillic"],
   display: "swap",
   weight: ["400", "500", "600", "700"],
+});
+
+const montserrat = Montserrat({
+  variable: "--font-soft",
+  subsets: ["latin", "cyrillic"],
+  display: "swap",
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -53,7 +60,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${inter.variable} ${spaceGrotesk.variable} ${cormorant.variable} antialiased`}>
+      <body
+        className={`${inter.variable} ${spaceGrotesk.variable} ${cormorant.variable} ${montserrat.variable} antialiased`}
+      >
         <Suspense fallback={null}>
           <UIProvider>
             <div className="relative z-[2]">{children}</div>

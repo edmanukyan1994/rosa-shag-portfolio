@@ -73,6 +73,7 @@ body {
 .site-content {
   position: relative;
   z-index: 10;
+  isolation: isolate;
 }
 
 /* Layer 1: gradient — static, no animation */
@@ -336,6 +337,64 @@ body {
 
 .readable-copy {
   text-shadow: 0 1px 18px rgba(255, 248, 252, 0.85);
+}
+
+.about-panel {
+  background: rgba(255, 252, 253, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 2rem;
+  box-shadow:
+    0 24px 64px -36px rgba(58, 36, 41, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+}
+
+.about-lead {
+  font-family: var(--font-soft), var(--font-sans), system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.about-copy {
+  font-family: var(--font-soft), var(--font-sans), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+.about-copy p {
+  margin: 0;
+}
+
+.site-stickers {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.site-sticker {
+  position: absolute;
+  opacity: 1;
+  filter:
+    drop-shadow(0 14px 28px rgba(58, 36, 41, 0.32))
+    drop-shadow(0 3px 8px rgba(255, 255, 255, 0.5))
+    saturate(1.15)
+    contrast(1.1);
+}
+
+@media (max-width: 640px) {
+  .site-sticker {
+    transform-origin: center center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-sticker {
+    animation: none !important;
+  }
 }
 
 /* 3D placeholder brand logos (until real logos are added) */
