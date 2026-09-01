@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { FluffyTitle } from "@/components/ui/FluffyTitle";
 import { MetricsSection } from "./MetricsSection";
 import { Testimonials } from "./Testimonials";
 
@@ -20,8 +21,8 @@ export function SocialProofSection() {
 
         <div className="mt-20">
           <SectionHeading
-            eyebrow="Отзывы"
-            title="Что говорят клиенты"
+            titleNode={<FluffyTitle src="/images/fluffy-otzyvy.png" alt="Отзывы" />}
+            description="Что говорят клиенты"
             align="center"
           />
           <div className="mt-10">

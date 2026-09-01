@@ -17,8 +17,7 @@ export type VideoFormat =
   | "funny"
   | "inspiring-recipes"
   | "beauty-aesthetic"
-  | "hair-care"
-  | "humor";
+  | "hair-care";
 
 export interface VideoItem {
   id: string;

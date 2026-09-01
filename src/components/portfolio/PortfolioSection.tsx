@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { FluffyTitle } from "@/components/ui/FluffyTitle";
 import { FilterTabs } from "./FilterTabs";
 import { VideoCard } from "./VideoCard";
 import { videos } from "@/data/videos";
@@ -29,7 +30,7 @@ export function PortfolioSection() {
         >
           <SectionHeading
             eyebrow="Портфолио"
-            title="Работы"
+            titleNode={<FluffyTitle src="/images/fluffy-raboty.png" alt="Работы" priority />}
             description="15 форматов — от влогов и распаковок до POV и эстетики."
             align="center"
           />
@@ -40,10 +41,9 @@ export function PortfolioSection() {
         </div>
 
         <motion.div
-          layout
           className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3"
         >
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode="sync">
             {filtered.map((item) => (
               <VideoCard key={item.id} item={item} />
             ))}

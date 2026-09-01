@@ -19,6 +19,7 @@ export function SiteBackdrop() {
 
   useEffect(() => {
     let frame = 0;
+    let debounceTimer = 0;
 
     const update = () => {
       const docHeight = Math.max(
@@ -38,7 +39,10 @@ export function SiteBackdrop() {
 
     const schedule = () => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(update);
+      frame = requestAnimationFrame(() => {
+        window.clearTimeout(debounceTimer);
+        debounceTimer = window.setTimeout(update, 120);
+      });
     };
 
     schedule();
@@ -51,6 +55,7 @@ export function SiteBackdrop() {
 
     return () => {
       cancelAnimationFrame(frame);
+      window.clearTimeout(debounceTimer);
       observer.disconnect();
       window.removeEventListener("resize", schedule);
       window.clearTimeout(delayed);

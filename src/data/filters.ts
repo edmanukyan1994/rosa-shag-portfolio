@@ -20,5 +20,4 @@ export const filterTabs: { id: VideoFormat; label: string }[] = [
   { id: "inspiring-recipes", label: "Вдохновляющие рецепты" },
   { id: "beauty-aesthetic", label: "Бьюти эстетика/подборки" },
   { id: "hair-care", label: "Уход за волосами" },
-  { id: "humor", label: "Юмор" },
 ];
