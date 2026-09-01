@@ -15,7 +15,7 @@ export function SiteStickers() {
     updateScale();
     mq.addEventListener("change", updateScale);
 
-    const timer = window.setTimeout(() => setReady(true), 500);
+    const timer = window.setTimeout(() => setReady(true), 300);
 
     return () => {
       mq.removeEventListener("change", updateScale);
@@ -33,28 +33,32 @@ export function SiteStickers() {
         return (
           <div
             key={sticker.id}
-            className="site-sticker site-sticker--float"
+            className="site-sticker"
             style={{
               top: sticker.top,
               left: sticker.left,
               right: sticker.right,
               width: size,
               height: size,
-              ["--sticker-rotate" as string]: `${sticker.rotate}deg`,
-              ["--sticker-delay" as string]: `${sticker.delay}s`,
+              transform: `rotate(${sticker.rotate}deg)`,
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={sticker.file}
-              alt=""
-              width={size}
-              height={size}
-              className="h-full w-full object-contain"
-              draggable={false}
-              loading="lazy"
-              decoding="async"
-            />
+            <div
+              className="site-sticker__float"
+              style={{ animationDelay: `${sticker.delay}s` }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={sticker.file}
+                alt=""
+                width={size}
+                height={size}
+                className="h-full w-full object-contain"
+                draggable={false}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
           </div>
         );
       })}

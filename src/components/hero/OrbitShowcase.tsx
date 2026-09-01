@@ -2,7 +2,6 @@
 
 import {
   motion,
-  useAnimationFrame,
   useMotionValue,
   useTransform,
 } from "framer-motion";
@@ -90,14 +89,44 @@ export function OrbitShowcase({
   useLayoutEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    const coarse = window.matchMedia("(pointer: coarse)").matches;
     const lowPower = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setReduceEffects(coarse || lowPower);
+    setReduceEffects(lowPower);
   }, []);
 
-  useAnimationFrame((_, delta) => {
-    angle.set(angle.get() + delta * SPEED);
-  });
+  useEffect(() => {
+    if (!mounted) return;
+
+    let raf = 0;
+    let last = performance.now();
+    const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+    const speed = isCoarse ? 0.018 : SPEED;
+
+    const tick = (now: number) => {
+      const delta = Math.min(now - last, 50);
+      last = now;
+      angle.set(angle.get() + delta * speed);
+      raf = requestAnimationFrame(tick);
+    };
+
+    const resume = () => {
+      cancelAnimationFrame(raf);
+      last = performance.now();
+      raf = requestAnimationFrame(tick);
+    };
+
+    resume();
+
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") resume();
+    };
+
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [angle, mounted]);
 
   return (
     <div

@@ -49,7 +49,7 @@ export function Hero() {
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button size="lg" onClick={() => openContact()}>
-              Заказать видео <ArrowRight className="h-4 w-4" />
+              Оставить заявку <ArrowRight className="h-4 w-4" />
             </Button>
             <Button variant="secondary" size="lg" href="#portfolio">
               Смотреть работы <ArrowUpRight className="h-4 w-4" />

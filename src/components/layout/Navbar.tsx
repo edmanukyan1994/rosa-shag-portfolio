@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { Menu, MessageCircle, X } from "lucide-react";
 import { useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -38,19 +38,30 @@ export function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden md:block">
-            <Button size="sm" onClick={() => openContact()}>
-              Заказать видео
-            </Button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => openContact()}
+              className="flex h-9 cursor-pointer items-center gap-1.5 rounded-full bg-accent px-3 text-xs font-semibold text-white md:hidden"
+            >
+              <MessageCircle className="h-3.5 w-3.5" />
+              Связаться
+            </button>
+
+            <button
+              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black/[0.035] md:hidden"
+              onClick={() => setOpen((o) => !o)}
+              aria-label="Toggle menu"
+            >
+              {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            </button>
           </div>
 
-          <button
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black/[0.035] md:hidden"
-            onClick={() => setOpen((o) => !o)}
-            aria-label="Toggle menu"
-          >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
+          <div className="hidden md:block">
+            <Button size="sm" onClick={() => openContact()}>
+              Оставить заявку
+            </Button>
+          </div>
         </div>
 
         {open && (
@@ -73,7 +84,7 @@ export function Navbar() {
                 openContact();
               }}
             >
-              Заказать видео
+              Оставить заявку
             </Button>
           </div>
         )}

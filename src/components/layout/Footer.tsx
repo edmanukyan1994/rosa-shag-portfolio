@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Check, Copy, Sparkles } from "lucide-react";
+import { ArrowUpRight, Check, Mail, MessageCircle, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -33,8 +33,8 @@ export function Footer() {
   return (
     <footer id="contact" className="relative overflow-hidden pt-24 sm:pt-28">
       <Container>
-        <div className="glass-panel flex flex-col items-center gap-6 rounded-[32px] px-6 py-14 text-center sm:px-16">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-soft text-accent">
+        <div className="contact-cta glass-panel flex flex-col items-center gap-6 rounded-[32px] px-6 py-14 text-center sm:px-16">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white shadow-[0_8px_24px_-8px_rgba(231,84,128,0.65)]">
             <Sparkles className="h-5 w-5" />
           </span>
           <h2 className="font-display max-w-xl text-3xl font-medium text-text-primary sm:text-4xl">
@@ -44,22 +44,37 @@ export function Footer() {
             Пришлите бренд и продукт — отвечу с форматами и сроками в течение
             нескольких часов.
           </p>
-          <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-            <Button size="lg" onClick={() => openContact()}>
+
+          <div className="mt-1 grid w-full max-w-lg grid-cols-1 gap-3 sm:grid-cols-2">
+            <Button size="lg" onClick={() => openContact()} className="w-full">
               Быстрая заявка <ArrowUpRight className="h-4 w-4" />
             </Button>
-            <Button variant="secondary" size="lg" onClick={handleCopy}>
-              {copied ? (
-                <>
-                  <Check className="h-4 w-4" /> Email скопирован
-                </>
-              ) : (
-                <>
-                  <Copy className="h-4 w-4" /> {CONTACT.email}
-                </>
-              )}
+            <Button
+              variant="secondary"
+              size="lg"
+              href={SOCIAL_LINKS.telegram}
+              className="w-full border-accent/25 bg-white/80"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Telegram
             </Button>
           </div>
+
+          <button
+            type="button"
+            onClick={handleCopy}
+            className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border-subtle bg-white/70 px-5 py-2.5 text-sm font-medium text-text-primary transition-colors hover:border-accent/35"
+          >
+            {copied ? (
+              <>
+                <Check className="h-4 w-4 text-accent" /> Email скопирован
+              </>
+            ) : (
+              <>
+                <Mail className="h-4 w-4 text-accent" /> {CONTACT.email}
+              </>
+            )}
+          </button>
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-8 border-t border-border-subtle py-10 sm:flex-row">

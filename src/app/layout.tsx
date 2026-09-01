@@ -5,6 +5,7 @@ import "./globals.css";
 import { UIProvider } from "@/lib/ui-context";
 import { VideoModal } from "@/components/modal/VideoModal";
 import { ContactDrawer } from "@/components/contact/ContactDrawer";
+import { ContactFab } from "@/components/contact/ContactFab";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -68,6 +69,7 @@ export default function RootLayout({
             <div className="relative z-[2]">{children}</div>
             <VideoModal />
             <ContactDrawer />
+            <ContactFab />
           </UIProvider>
         </Suspense>
       </body>
