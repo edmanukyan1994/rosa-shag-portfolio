@@ -221,7 +221,15 @@ export function ContactDrawer() {
               </form>
             )}
 
-            <div className="mt-6 grid grid-cols-2 gap-2">
+            <div className="mt-6 grid grid-cols-3 gap-2">
+              <a
+                href={SOCIAL_LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border border-border-subtle bg-white/70 px-3 py-3 text-center text-sm font-medium text-text-primary transition-colors hover:border-accent/40"
+              >
+                Instagram
+              </a>
               <a
                 href={SOCIAL_LINKS.telegram}
                 target="_blank"
@@ -235,7 +243,7 @@ export function ContactDrawer() {
                 onClick={handleCopyEmail}
                 className="cursor-pointer rounded-xl border border-border-subtle bg-white/70 px-3 py-3 text-center text-sm font-medium text-text-primary transition-colors hover:border-accent/40"
               >
-                {copied ? "Email скопирован" : "Скопировать email"}
+                {copied ? "Скопировано" : "Email"}
               </button>
             </div>
 

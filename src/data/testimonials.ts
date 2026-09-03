@@ -39,5 +39,5 @@ export const metrics: Metric[] = [
   { id: "m1", value: "12M+", label: "Просмотров", hint: "На всех брендовых кампаниях" },
   { id: "m2", value: "+45%", label: "Средний рост CTR", hint: "vs. лучшая реклама бренда" },
   { id: "m3", value: "38%", label: "Удержание на хуке", hint: "3-секундный просмотр" },
-  { id: "m4", value: "60+", label: "Брендов", hint: "Beauty, fashion & lifestyle" },
+  { id: "m4", value: "300+", label: "Коммерческих интеграций", hint: "Beauty, fashion & lifestyle" },
 ];

@@ -18,6 +18,7 @@ const footerLinks = [
   { href: "#about", label: "Обо мне" },
   { href: "#portfolio", label: "Портфолио" },
   { href: "#proof", label: "Результаты" },
+  { href: "#reviews", label: "Отзывы" },
 ];
 
 export function Footer() {
@@ -45,9 +46,18 @@ export function Footer() {
             нескольких часов.
           </p>
 
-          <div className="mt-1 grid w-full max-w-lg grid-cols-1 gap-3 sm:grid-cols-2">
-            <Button size="lg" onClick={() => openContact()} className="w-full">
+          <div className="mt-1 grid w-full max-w-lg grid-cols-1 gap-3 sm:grid-cols-3">
+            <Button size="lg" onClick={() => openContact()} className="w-full sm:col-span-1">
               Быстрая заявка <ArrowUpRight className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              href={SOCIAL_LINKS.instagram}
+              className="w-full border-accent/25 bg-white/80"
+            >
+              <InstagramIcon className="h-4 w-4" />
+              Instagram
             </Button>
             <Button
               variant="secondary"

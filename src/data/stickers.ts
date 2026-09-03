@@ -29,10 +29,11 @@ export interface StickerPlacement {
   size: number;
   rotate: number;
   delay: number;
+  duration: number;
 }
 
-/** Deterministic chaotic layout — stable between server and client renders. */
-export function buildStickerPlacements(count = 36): StickerPlacement[] {
+/** Deterministic layout — stickers stay in side gutters, behind content. */
+export function buildStickerPlacements(count = 16): StickerPlacement[] {
   const pool = [...stickers];
   if (pool.length === 0) return [];
 
@@ -43,45 +44,27 @@ export function buildStickerPlacements(count = 36): StickerPlacement[] {
 
   return picked.map((sticker, index) => {
     const seed = hashSeed(`${sticker.id}-${index}`);
-    const topBase = 3 + (seed % 88);
-    const size = 120 + pick(seed, 8, 72);
-    const rotate = -28 + pick(seed, 12, 56);
-    const delay = (seed % 20) / 10;
+    // Spread along page height, keep clear of the very top navbar band.
+    const topBase = 8 + ((index * 11 + (seed % 9)) % 84);
+    const size = 88 + pick(seed, 8, 48);
+    const rotate = -18 + pick(seed, 12, 36);
+    const delay = (seed % 24) / 10;
+    const duration = 6 + pick(seed, 3, 5);
 
+    // Narrow side gutters only — free margins, not over the content column.
     const onRight = index % 2 === 1;
-    const zone = pick(seed, 4, 4);
-    let left: string | undefined;
-    let right: string | undefined;
-
-    if (onRight) {
-      if (zone === 0) {
-        right = `${seed % 8}%`;
-      } else if (zone === 1) {
-        right = `${8 + (seed % 12)}%`;
-      } else if (zone === 2) {
-        right = `${2 + (seed % 6)}%`;
-      } else {
-        right = `${14 + (seed % 18)}%`;
-      }
-    } else if (zone === 0) {
-      left = `${seed % 8}%`;
-    } else if (zone === 1) {
-      left = `${8 + (seed % 12)}%`;
-    } else if (zone === 2) {
-      left = `${2 + (seed % 6)}%`;
-    } else {
-      left = `${14 + (seed % 18)}%`;
-    }
+    const inset = 0.5 + (seed % 5) * 0.6;
 
     return {
       id: `${sticker.id}-${index}`,
       file: sticker.file,
       top: `${topBase}%`,
-      left,
-      right,
+      left: onRight ? undefined : `${inset}%`,
+      right: onRight ? `${inset}%` : undefined,
       size,
       rotate,
       delay,
+      duration,
     };
   });
 }

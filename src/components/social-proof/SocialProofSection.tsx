@@ -19,7 +19,7 @@ export function SocialProofSection() {
           <MetricsSection />
         </div>
 
-        <div className="mt-20">
+        <div id="reviews" className="mt-20 scroll-mt-28">
           <SectionHeading
             titleNode={<FluffyTitle src="/images/fluffy-otzyvy.png" alt="Отзывы" />}
             description="Что говорят клиенты"

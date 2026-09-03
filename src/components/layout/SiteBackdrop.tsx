@@ -8,6 +8,7 @@ const SECTIONS = [
   { id: "brands", label: "Бренды" },
   { id: "portfolio", label: "Портфолио" },
   { id: "proof", label: "Результаты" },
+  { id: "reviews", label: "Отзывы" },
   { id: "contact", label: "Контакты" },
 ];
 

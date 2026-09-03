@@ -11,6 +11,7 @@ const links = [
   { href: "#brands", label: "Бренды" },
   { href: "#portfolio", label: "Портфолио" },
   { href: "#proof", label: "Результаты" },
+  { href: "#reviews", label: "Отзывы" },
   { href: "#contact", label: "Контакты" },
 ];
 

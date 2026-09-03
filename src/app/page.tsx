@@ -12,6 +12,8 @@ export default function Home() {
   return (
     <main className="relative isolate min-h-screen overflow-x-hidden">
       <SiteBackdrop />
+      <SiteStickers />
+
       <div className="site-content relative z-10">
         <Navbar />
         <Hero />
@@ -21,8 +23,6 @@ export default function Home() {
         <SocialProofSection />
         <Footer />
       </div>
-
-      <SiteStickers />
     </main>
   );
 }

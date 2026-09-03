@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { buildStickerPlacements } from "@/data/stickers";
 
-const placements = buildStickerPlacements(14);
+const placements = buildStickerPlacements(16);
 
 export function SiteStickers() {
   const [ready, setReady] = useState(false);
@@ -11,7 +11,7 @@ export function SiteStickers() {
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 640px)");
-    const updateScale = () => setSizeScale(mq.matches ? 0.78 : 1);
+    const updateScale = () => setSizeScale(mq.matches ? 0.7 : 1);
     updateScale();
     mq.addEventListener("change", updateScale);
 
@@ -40,25 +40,22 @@ export function SiteStickers() {
               right: sticker.right,
               width: size,
               height: size,
-              transform: `rotate(${sticker.rotate}deg)`,
+              ["--sticker-base-rotate" as string]: `${sticker.rotate}deg`,
+              ["--sticker-delay" as string]: `${sticker.delay}s`,
+              ["--sticker-duration" as string]: `${sticker.duration}s`,
             }}
           >
-            <div
-              className="site-sticker__float"
-              style={{ animationDelay: `${sticker.delay}s` }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={sticker.file}
-                alt=""
-                width={size}
-                height={size}
-                className="h-full w-full object-contain"
-                draggable={false}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={sticker.file}
+              alt=""
+              width={size}
+              height={size}
+              className="site-sticker__img h-full w-full object-contain"
+              draggable={false}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         );
       })}
