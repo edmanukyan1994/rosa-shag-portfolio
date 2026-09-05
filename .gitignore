@@ -51,3 +51,9 @@ public/videos/**/source/
 !/public/videos/unboxing/web/
 /public/videos/vlog/*
 !/public/videos/vlog/web/
+/public/videos/problem-solution/*
+!/public/videos/problem-solution/web/
+/public/videos/lifehack/*
+!/public/videos/lifehack/web/
+/public/videos/tutorial/*
+!/public/videos/tutorial/web/

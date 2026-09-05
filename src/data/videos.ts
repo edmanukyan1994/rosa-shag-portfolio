@@ -251,6 +251,36 @@ export const videos: VideoItem[] = [
     videoSrc: "/videos/vlog/web/IMG_8427.mp4",
     durationLabel: "0:39",
   },
+  {
+    id: "ps-1",
+    title: "Проблема и решение",
+    client: "Rosa_shag",
+    format: "problem-solution",
+    formatTag: "Проблема/Решение",
+    thumbnail: "/images/thumbnails/problem-solution/IMG_9018.jpg",
+    videoSrc: "/videos/problem-solution/web/IMG_9018.mp4",
+    durationLabel: "0:09",
+  },
+  {
+    id: "hack-1",
+    title: "Лайфхак",
+    client: "Rosa_shag",
+    format: "lifehack",
+    formatTag: "Лайфхак",
+    thumbnail: "/images/thumbnails/lifehack/IMG_8865.jpg",
+    videoSrc: "/videos/lifehack/web/IMG_8865.mp4",
+    durationLabel: "0:11",
+  },
+  {
+    id: "tut-1",
+    title: "Туториал",
+    client: "Rosa_shag",
+    format: "tutorial",
+    formatTag: "Туториал",
+    thumbnail: "/images/thumbnails/tutorial/IMG_8864.jpg",
+    videoSrc: "/videos/tutorial/web/IMG_8864.mp4",
+    durationLabel: "0:18",
+  },
 ];
 
 export const heroReels: VideoItem[] = [
