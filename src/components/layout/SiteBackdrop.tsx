@@ -41,8 +41,14 @@ export function SiteBackdrop() {
         if (!el) return [];
         const rect = el.getBoundingClientRect();
         const top = rect.top + window.scrollY - glassTop;
-        const inset = isMobile ? Math.min(72, Math.max(28, rect.height * 0.08)) : 56;
-        return [{ id: section.id, label: section.label, top: Math.max(0, top + inset) }];
+
+        if (!isMobile) {
+          return [{ id: section.id, label: section.label, top: Math.max(0, top - 56) }];
+        }
+
+        // Below the fixed header, inside the empty glass padding above content.
+        const band = section.id === "reviews" ? -56 : 108;
+        return [{ id: section.id, label: section.label, top: Math.max(0, top + band) }];
       });
 
       setLabels(placed);

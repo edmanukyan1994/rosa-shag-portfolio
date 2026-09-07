@@ -6,7 +6,7 @@ import { Testimonials } from "./Testimonials";
 
 export function SocialProofSection() {
   return (
-    <section id="proof" className="relative py-24 sm:py-28 [content-visibility:auto] [contain-intrinsic-size:auto_900px]">
+    <section id="proof" className="relative pt-40 pb-16 sm:py-28">
       <Container>
         <SectionHeading
           eyebrow="Результаты"
@@ -19,7 +19,7 @@ export function SocialProofSection() {
           <MetricsSection />
         </div>
 
-        <div id="reviews" className="mt-20 scroll-mt-28">
+        <div id="reviews" className="mt-24 scroll-mt-28">
           <SectionHeading
             titleNode={<FluffyTitle src="/images/fluffy-otzyvy.png" alt="Отзывы" />}
             description="Что говорят клиенты"

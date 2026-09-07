@@ -7,7 +7,7 @@ export function BrandsSection() {
   const loop = [...brands, ...brands];
 
   return (
-    <section id="brands" className="relative py-20 sm:py-24">
+    <section id="brands" className="relative pt-40 pb-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Бренды"

@@ -32,7 +32,7 @@ export function Footer() {
   };
 
   return (
-    <footer id="contact" className="relative overflow-hidden pt-24 sm:pt-28">
+    <footer id="contact" className="relative overflow-hidden pt-40 sm:pt-28">
       <Container>
         <div className="contact-cta glass-panel flex flex-col items-center gap-6 rounded-[32px] px-6 py-14 text-center sm:px-16">
           <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white shadow-[0_8px_24px_-8px_rgba(231,84,128,0.65)]">

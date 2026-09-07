@@ -19,7 +19,7 @@ export function PortfolioSection() {
   );
 
   return (
-    <section id="portfolio" className="relative py-24 sm:py-28 [content-visibility:auto] [contain-intrinsic-size:auto_1200px]">
+    <section id="portfolio" className="relative pt-40 pb-16 sm:py-28">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
