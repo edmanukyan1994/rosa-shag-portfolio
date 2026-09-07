@@ -163,7 +163,9 @@ body {
 
 @media (max-width: 767px) {
   .site-backdrop-label {
-    display: none;
+    font-size: clamp(1.7rem, 11vw, 2.6rem);
+    letter-spacing: 0.08em;
+    color: rgba(32, 18, 22, 0.5);
   }
 
   .site-stickers {

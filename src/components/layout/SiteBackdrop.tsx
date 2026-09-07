@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const SECTIONS = [
   { id: "top", label: "Rosa_shag" },
@@ -17,22 +17,32 @@ type PlacedLabel = { id: string; label: string; top: number };
 export function SiteBackdrop() {
   const [height, setHeight] = useState(0);
   const [labels, setLabels] = useState<PlacedLabel[]>([]);
+  const glassRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let frame = 0;
     let debounceTimer = 0;
 
     const update = () => {
+      const glass = glassRef.current;
       const docHeight = Math.max(
         document.documentElement.scrollHeight,
         document.body.scrollHeight
       );
       setHeight(docHeight);
+      if (!glass) return;
+
+      const glassTop = glass.getBoundingClientRect().top + window.scrollY;
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
 
       const placed = SECTIONS.flatMap((section) => {
+        if (isMobile && section.id === "top") return [];
         const el = document.getElementById(section.id);
         if (!el) return [];
-        return [{ id: section.id, label: section.label, top: el.offsetTop - 56 }];
+        const rect = el.getBoundingClientRect();
+        const top = rect.top + window.scrollY - glassTop;
+        const inset = isMobile ? Math.min(72, Math.max(28, rect.height * 0.08)) : 56;
+        return [{ id: section.id, label: section.label, top: Math.max(0, top + inset) }];
       });
 
       setLabels(placed);
@@ -65,15 +75,14 @@ export function SiteBackdrop() {
 
   return (
     <>
-      {/* Sky — fixed gradient, always fills viewport */}
       <div className="site-backdrop-sky" aria-hidden="true">
         <div className="site-backdrop-gradient" />
         <div className="site-backdrop-glow site-backdrop-glow-a" />
         <div className="site-backdrop-glow site-backdrop-glow-b" />
       </div>
 
-      {/* Glass stack scrolls with the page — labels stay glued to ribs */}
       <div
+        ref={glassRef}
         className="site-backdrop-glass"
         style={{ height: height || "100vh" }}
         aria-hidden="true"
