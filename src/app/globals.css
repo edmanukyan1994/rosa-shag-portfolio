@@ -30,7 +30,7 @@
   --color-accent-foreground: var(--accent-foreground);
   --font-sans: var(--font-inter);
   --font-display: var(--font-space-grotesk);
-  --animate-marquee: marquee 32s linear infinite;
+  --animate-marquee: marquee 46s linear infinite;
   --animate-orbit-spin: orbit-spin 40s linear infinite;
   --animate-float: float 6s ease-in-out infinite;
   --animate-shimmer: shimmer 2.4s ease-in-out infinite;
@@ -278,6 +278,28 @@ body {
   }
 }
 
+.brand-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 7%,
+    #000 93%,
+    transparent
+  );
+}
+
+.brand-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee 46s linear infinite;
+  will-change: transform;
+}
+
+.brand-marquee:hover .brand-marquee__track {
+  animation-play-state: paused;
+}
+
 @keyframes orbit-spin {
   from {
     transform: rotate(0deg);
@@ -464,7 +486,8 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .site-sticker__img,
-  .contact-fab {
+  .contact-fab,
+  .brand-marquee__track {
     animation: none;
   }
 }

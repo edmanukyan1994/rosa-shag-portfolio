@@ -11,13 +11,13 @@ export type VideoFormat =
   | "honest-review"
   | "tutorial"
   | "pov"
-  | "time-result"
   | "aesthetic"
   | "lifehack"
   | "funny"
   | "inspiring-recipes"
   | "beauty-aesthetic"
-  | "hair-care";
+  | "hair-care"
+  | "comparison";
 
 export interface VideoItem {
   id: string;

@@ -3,6 +3,7 @@ import { VideoFormat } from "@/types";
 export const filterTabs: { id: VideoFormat; label: string }[] = [
   { id: "all", label: "Все" },
   { id: "before-after", label: "До/После" },
+  { id: "comparison", label: "Сравнение" },
   { id: "problem-solution", label: "Проблема/Решение" },
   { id: "unboxing", label: "Распаковка" },
   { id: "talking-head", label: "Говорящая голова" },
@@ -13,11 +14,10 @@ export const filterTabs: { id: VideoFormat; label: string }[] = [
   { id: "honest-review", label: "Честный отзыв" },
   { id: "tutorial", label: "Туториал" },
   { id: "pov", label: "POV" },
-  { id: "time-result", label: "Результат через время" },
   { id: "aesthetic", label: "Эстетика" },
   { id: "lifehack", label: "Лайфхак" },
   { id: "funny", label: "Юморной" },
   { id: "inspiring-recipes", label: "Вдохновляющие рецепты" },
-  { id: "beauty-aesthetic", label: "Бьюти эстетика/подборки" },
+  { id: "beauty-aesthetic", label: "Бьюти эстетика" },
   { id: "hair-care", label: "Уход за волосами" },
 ];
