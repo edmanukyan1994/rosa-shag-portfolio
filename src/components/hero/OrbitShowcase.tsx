@@ -131,7 +131,7 @@ export function OrbitShowcase({
   return (
     <div
       ref={containerRef}
-      className="relative mx-auto h-[min(92vw,520px)] w-full max-w-[1040px] select-none sm:h-[560px] lg:h-[700px]"
+      className="relative mx-auto h-[min(88vw,480px)] w-full max-w-[1040px] select-none overflow-hidden sm:h-[560px] sm:overflow-visible lg:h-[700px]"
     >
       <div
         className="absolute inset-0 [transform-style:preserve-3d] will-change-transform"

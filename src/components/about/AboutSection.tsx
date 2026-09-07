@@ -21,7 +21,7 @@ export function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
-          className="about-panel mx-auto flex max-w-2xl flex-col items-center gap-8 px-6 py-10 text-center sm:gap-10 sm:px-10 sm:py-12"
+          className="about-panel mx-auto flex max-w-2xl flex-col items-center gap-6 px-5 py-8 text-center sm:gap-10 sm:px-10 sm:py-12"
         >
           <div className="relative flex w-[200px] items-end justify-center sm:w-[240px]">
             <div className="relative h-[260px] w-[170px] sm:h-[300px] sm:w-[196px]">
@@ -53,7 +53,7 @@ export function AboutSection() {
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-2 px-1">
             {highlights.map((item) => (
               <Badge key={item} variant="outline">
                 {item}

@@ -161,6 +161,26 @@ body {
     -2px 0 0 rgba(0, 0, 0, 0.1);
 }
 
+@media (max-width: 767px) {
+  .site-backdrop-label {
+    display: none;
+  }
+
+  .site-stickers {
+    display: none;
+  }
+
+  .brand-marquee {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 4%,
+      #000 96%,
+      transparent
+    );
+  }
+}
+
 /* Ribbed glass */
 .site-backdrop-ribbed {
   position: absolute;

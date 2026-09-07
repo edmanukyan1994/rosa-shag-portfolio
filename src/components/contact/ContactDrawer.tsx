@@ -221,7 +221,7 @@ export function ContactDrawer() {
               </form>
             )}
 
-            <div className="mt-6 grid grid-cols-3 gap-2">
+            <div className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-3">
               <a
                 href={SOCIAL_LINKS.instagram}
                 target="_blank"
