@@ -8,10 +8,15 @@ const placements = buildStickerPlacements(16);
 export function SiteStickers() {
   const [ready, setReady] = useState(false);
   const [sizeScale, setSizeScale] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 640px)");
-    const updateScale = () => setSizeScale(mq.matches ? 0.7 : 1);
+    const updateScale = () => {
+      const mobile = mq.matches;
+      setIsMobile(mobile);
+      setSizeScale(mobile ? 0.52 : 1);
+    };
     updateScale();
     mq.addEventListener("change", updateScale);
 
@@ -25,9 +30,11 @@ export function SiteStickers() {
 
   if (!ready || placements.length === 0) return null;
 
+  const visible = isMobile ? placements.filter((_, i) => i % 2 === 0).slice(0, 8) : placements;
+
   return (
     <div className="site-stickers" aria-hidden="true">
-      {placements.map((sticker) => {
+      {visible.map((sticker) => {
         const size = Math.round(sticker.size * sizeScale);
 
         return (
