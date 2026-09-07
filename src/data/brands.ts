@@ -13,7 +13,7 @@ export const brands: Brand[] = [
   { id: "tashe", name: "TaShé", logoSrc: "/images/brands/tashe.png" },
   { id: "kamali", name: "KAMALI", logoSrc: "/images/brands/kamali.png" },
   { id: "kuchenland", name: "KÜCHENLAND", logoSrc: "/images/brands/kuchenland.png" },
-  { id: "chair", name: "", logoSrc: "/images/brands/chair.png" },
+  { id: "hochustul", name: "hochustul", logoSrc: "/images/brands/chair.png" },
   { id: "zimaletto", name: "zimaletto", logoSrc: "/images/brands/zimaletto.png" },
   { id: "mixit", name: "MIXIT", logoSrc: "/images/brands/mixit.png" },
   { id: "ka", name: "KA", logoSrc: "/images/brands/ka.png" },
