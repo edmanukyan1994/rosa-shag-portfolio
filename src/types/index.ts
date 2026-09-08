@@ -5,13 +5,9 @@ export type VideoFormat =
   | "unboxing"
   | "talking-head"
   | "picks"
-  | "grwm"
   | "vlog"
   | "asmr"
-  | "honest-review"
   | "tutorial"
-  | "pov"
-  | "aesthetic"
   | "lifehack"
   | "funny"
   | "inspiring-recipes"
@@ -34,7 +30,6 @@ export interface VideoItem {
 export interface Testimonial {
   id: string;
   name: string;
-  role: string;
   brand: string;
   quote: string;
   avatar?: string;

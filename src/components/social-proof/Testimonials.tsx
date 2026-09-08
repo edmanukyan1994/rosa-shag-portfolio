@@ -26,9 +26,7 @@ export function Testimonials() {
             </div>
             <div>
               <p className="text-sm font-medium text-text-primary">{t.name}</p>
-              <p className="text-xs text-text-muted">
-                {t.role} · {t.brand}
-              </p>
+              <p className="text-xs text-text-muted">{t.brand}</p>
             </div>
           </div>
         </motion.div>

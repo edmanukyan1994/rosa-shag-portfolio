@@ -31,7 +31,7 @@ export function PortfolioSection() {
           <SectionHeading
             eyebrow="Портфолио"
             titleNode={<FluffyTitle src="/images/fluffy-raboty.png" alt="Работы" priority />}
-            description="15 форматов — от влогов и распаковок до POV и эстетики."
+            description="Форматы от влогов и распаковок до туториалов и бьюти-эстетики."
             align="center"
           />
         </motion.div>
