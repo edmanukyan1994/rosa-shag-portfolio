@@ -46,6 +46,14 @@ export const metadata: Metadata = {
     "TikTok реклама",
     "UGC видео",
   ],
+  metadataBase: new URL("https://www.rosashag.cc"),
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
+  },
 };
 
 export const viewport: Viewport = {
