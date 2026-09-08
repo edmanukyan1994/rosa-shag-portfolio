@@ -6,6 +6,7 @@ import { AboutSection } from "@/components/about/AboutSection";
 import { BrandsSection } from "@/components/brands/BrandsSection";
 import { PortfolioSection } from "@/components/portfolio/PortfolioSection";
 import { SocialProofSection } from "@/components/social-proof/SocialProofSection";
+import { CollaborationSection } from "@/components/collaboration/CollaborationSection";
 import { Footer } from "@/components/layout/Footer";
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
         <BrandsSection />
         <PortfolioSection />
         <SocialProofSection />
+        <CollaborationSection />
         <Footer />
       </div>
     </main>

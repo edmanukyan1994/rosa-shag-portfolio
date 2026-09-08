@@ -12,6 +12,7 @@ const links = [
   { href: "#portfolio", label: "Портфолио" },
   { href: "#proof", label: "Результаты" },
   { href: "#reviews", label: "Отзывы" },
+  { href: "#collab", label: "Сотрудничество" },
   { href: "#contact", label: "Контакты" },
 ];
 
@@ -27,7 +28,7 @@ export function Navbar() {
               Rosa_shag
             </a>
 
-          <nav className="hidden items-center gap-8 md:flex">
+          <nav className="hidden items-center gap-4 xl:flex xl:gap-6">
             {links.map((l) => (
               <a
                 key={l.href}
@@ -40,14 +41,14 @@ export function Navbar() {
           </nav>
 
           <button
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black/[0.035] md:hidden"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black/[0.035] xl:hidden"
             onClick={() => setOpen((o) => !o)}
             aria-label="Toggle menu"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
 
-          <div className="hidden md:block">
+          <div className="hidden xl:block">
             <Button size="sm" onClick={() => openContact()}>
               Оставить заявку
             </Button>
@@ -55,7 +56,7 @@ export function Navbar() {
         </div>
 
         {open && (
-          <div className="glass-panel mt-2 flex flex-col gap-1 rounded-2xl p-3 md:hidden">
+          <div className="glass-panel mt-2 flex flex-col gap-1 rounded-2xl p-3 xl:hidden">
             {links.map((l) => (
               <a
                 key={l.href}

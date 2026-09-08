@@ -19,6 +19,7 @@ const footerLinks = [
   { href: "#portfolio", label: "Портфолио" },
   { href: "#proof", label: "Результаты" },
   { href: "#reviews", label: "Отзывы" },
+  { href: "#collab", label: "Сотрудничество" },
 ];
 
 export function Footer() {
