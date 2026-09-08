@@ -19,7 +19,7 @@ export const brands: Brand[] = [
   { id: "ka", name: "KA", logoSrc: "/images/brands/ka.png" },
   { id: "sv", name: "SV", logoSrc: "/images/brands/sv.png" },
   { id: "smeg", name: "smeg", logoSrc: "/images/brands/smeg.png" },
-  { id: "gerber", name: "Gerber", logoSrc: "/images/brands/gerber.png" },
+  { id: "pastukhov", name: "Пастухов", logoSrc: "/images/brands/gerber.png" },
   { id: "frambini", name: "frambini", logoSrc: "/images/brands/frambini.png" },
   { id: "zetter", name: "ZETTER", logoSrc: "/images/brands/zetter.png" },
   { id: "keltain", name: "KELTAIN.BEAUTY", logoSrc: "/images/brands/k.png" },
