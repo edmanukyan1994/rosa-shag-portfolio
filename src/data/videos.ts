@@ -631,6 +631,26 @@ export const videos: VideoItem[] = [
     videoSrc: "/videos/hair-care/web/IMG_9185.mp4",
     durationLabel: "0:23",
   },
+  {
+    id: "picks-4",
+    title: "Подборки",
+    client: "Rosa_shag",
+    format: "picks",
+    formatTag: "Подборки",
+    thumbnail: "/images/thumbnails/picks/IMG_9718.jpg",
+    videoSrc: "/videos/picks/web/IMG_9718.mp4",
+    durationLabel: "0:25",
+  },
+  {
+    id: "talk-4",
+    title: "Говорящая голова",
+    client: "Rosa_shag",
+    format: "talking-head",
+    formatTag: "Говорящая голова",
+    thumbnail: "/images/thumbnails/talking-head/IMG_9621.jpg",
+    videoSrc: "/videos/talking-head/web/IMG_9621.mp4",
+    durationLabel: "0:22",
+  },
 ];
 
 export const heroReels: VideoItem[] = [
